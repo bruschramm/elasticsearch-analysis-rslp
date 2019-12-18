@@ -78,68 +78,68 @@ public class RSLPStemmer {
 				}
 			}			
 		}
-		//Step 3: Adverb Reduction. Minimum word length is 9.
-		if(length >= 9) {
-			for(RSLPAdverbRules r : RSLPAdverbRules.values()) {
-				int[] result = r.processRule(term, length);
-				if(result[0] == 1) {
-					length = result[1];
-					break;
-				}
-			}	
-		}
-		//Step 4: Augmentative/Diminutive Reduction. Minimum word length is 5.
-		if(length >= 5) {
-			for(RSLPAugmentativeRules r : RSLPAugmentativeRules.values()) {
-				int[] result = r.processRule(term, length);
-				if(result[0] == 1) {
-					length = result[1];
-					break;
-				}
-			}
-		}
-		boolean changedTerm = false;
-		//Step 5: Noun Suffix Reduction. Minimum word length is 3.
-		if(length >= 3) {
-			for(RSLPNounRules r : RSLPNounRules.values()) {
-				int[] result = r.processRule(term, length);
-				if(result[0] == 1) {
-					length = result[1];
-					changedTerm = true; //store flag for next step
-					break;
-				}
-			}
-		}
-		//Step 6: Verb Suffix Reduction. Will process only if Step 5 was not applied.
-		//Minimum word length is 4.
-		if(!changedTerm && length >= 4) {
-			changedTerm = false; //reset flag
-			for(RSLPVerbRules r : RSLPVerbRules.values()) {
-				int[] result = r.processRule(term, length);
-				if(result[0] == 1) {
-					length = result[1];
-					changedTerm = true; //store flag for next step
-					break;
-				}
-			}			
-		}
-		//Step 7: Vowel Removal. Will process only if Step 6 (and by extension, 5) 
-		//was not applied. Minimum word length is 4.
-		if(!changedTerm && length >= 4) {
-			for(RSLPVowelRules r : RSLPVowelRules.values()) {
-				int[] result = r.processRule(term, length);
-				if(result[0] == 1) {
-					length = result[1];
-					break;
-				}
-			}				
-		}
-		//Step 8: Accents Removal.
-	    for (int i = 0; i < term.length; i++) {
-	        if (term[i] >= '\u00c0' && term[i] <= '\u017f') {
-	        	term[i] = tab00c0.charAt((int) term[i] - '\u00c0');
-	        }
-	    }
+		// //Step 3: Adverb Reduction. Minimum word length is 9.
+		// if(length >= 9) {
+		// 	for(RSLPAdverbRules r : RSLPAdverbRules.values()) {
+		// 		int[] result = r.processRule(term, length);
+		// 		if(result[0] == 1) {
+		// 			length = result[1];
+		// 			break;
+		// 		}
+		// 	}	
+		// }
+		// //Step 4: Augmentative/Diminutive Reduction. Minimum word length is 5.
+		// if(length >= 5) {
+		// 	for(RSLPAugmentativeRules r : RSLPAugmentativeRules.values()) {
+		// 		int[] result = r.processRule(term, length);
+		// 		if(result[0] == 1) {
+		// 			length = result[1];
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		// boolean changedTerm = false;
+		// //Step 5: Noun Suffix Reduction. Minimum word length is 3.
+		// if(length >= 3) {
+		// 	for(RSLPNounRules r : RSLPNounRules.values()) {
+		// 		int[] result = r.processRule(term, length);
+		// 		if(result[0] == 1) {
+		// 			length = result[1];
+		// 			changedTerm = true; //store flag for next step
+		// 			break;
+		// 		}
+		// 	}
+		// }
+		// //Step 6: Verb Suffix Reduction. Will process only if Step 5 was not applied.
+		// //Minimum word length is 4.
+		// if(!changedTerm && length >= 4) {
+		// 	changedTerm = false; //reset flag
+		// 	for(RSLPVerbRules r : RSLPVerbRules.values()) {
+		// 		int[] result = r.processRule(term, length);
+		// 		if(result[0] == 1) {
+		// 			length = result[1];
+		// 			changedTerm = true; //store flag for next step
+		// 			break;
+		// 		}
+		// 	}			
+		// }
+		// //Step 7: Vowel Removal. Will process only if Step 6 (and by extension, 5) 
+		// //was not applied. Minimum word length is 4.
+		// if(!changedTerm && length >= 4) {
+		// 	for(RSLPVowelRules r : RSLPVowelRules.values()) {
+		// 		int[] result = r.processRule(term, length);
+		// 		if(result[0] == 1) {
+		// 			length = result[1];
+		// 			break;
+		// 		}
+		// 	}				
+		// }
+		// //Step 8: Accents Removal.
+	    // for (int i = 0; i < term.length; i++) {
+	    //     if (term[i] >= '\u00c0' && term[i] <= '\u017f') {
+	    //     	term[i] = tab00c0.charAt((int) term[i] - '\u00c0');
+	    //     }
+	    // }
 	    return length;
 	}
 }

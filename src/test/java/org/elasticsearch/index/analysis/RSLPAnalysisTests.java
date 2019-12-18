@@ -32,9 +32,9 @@ public class RSLPAnalysisTests extends ESTestCase {
 
     @Test
     public void testDefaultsRSLPAnalysis() throws IOException {
-        AnalysisService analysisService = createAnalysisService(new Index("test", "_na_"), Settings.EMPTY, new AnalysisRSLPPlugin());
+        TestAnalysis analysisService = createTestAnalysis(new Index("test", "_na_"), Settings.EMPTY, new AnalysisRSLPPlugin());
 
-        TokenFilterFactory tokenizerFactory = analysisService.tokenFilter("br_rslp");
+        TokenFilterFactory tokenizerFactory = analysisService.tokenFilter.get("br_rslp");
 
         MatcherAssert.assertThat(tokenizerFactory, instanceOf(RSLPTokenFilterFactory.class));
     }

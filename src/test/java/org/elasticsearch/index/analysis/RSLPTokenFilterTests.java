@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.analysis.Tokenizer;
@@ -49,9 +48,9 @@ public class RSLPTokenFilterTests extends ESTestCase {
                 .put("index.analysis.filter.myStemmer.type", "br_rslp")
                 .build();
 
-        AnalysisService analysisService = createAnalysisService(index, settings, new AnalysisRSLPPlugin());
+		TestAnalysis analysisService = createTestAnalysis(index, settings, new AnalysisRSLPPlugin());
 
-        TokenFilterFactory filterFactory = analysisService.tokenFilter("br_rslp");
+        TokenFilterFactory filterFactory = analysisService.tokenFilter.get("br_rslp");
 
         Tokenizer tokenizer = new KeywordTokenizer();
         
@@ -80,9 +79,9 @@ public class RSLPTokenFilterTests extends ESTestCase {
                 .put("index.analysis.analyzer.myAnalyzer.filter", "br_rslp")
                 .build();
 
-        AnalysisService analysisService = createAnalysisService(index, settings, new AnalysisRSLPPlugin());
+        TestAnalysis analysisService = createTestAnalysis(index, settings, new AnalysisRSLPPlugin());
 
-        Analyzer analyzer = analysisService.analyzer("myAnalyzer");
+        NamedAnalyzer analyzer = analysisService.indexAnalyzers.get("myAnalyzer");
         
         Map<String,List<String>> phrases = buildPhraseList();
         

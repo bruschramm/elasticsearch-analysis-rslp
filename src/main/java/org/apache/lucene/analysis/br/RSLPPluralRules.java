@@ -37,7 +37,7 @@ public enum RSLPPluralRules {
 	PLURAL_RULE_10(new char[]{'r','e','s'},6,new char[]{'r'},null),
 	PLURAL_RULE_11(new char[]{'s'},3,null,new String[]{"aliás","ambas","ambos","após","através",
 			"atrás","cais","convés","crúcis","fezes","férias","gás","lápis","mais","mas","menos",
-			"messias","moisés","país","pires","pêsames","ês"});
+			"messias","moisés","país","pires","plus","pêsames","ês"});
 	
 	private final char[] suffix;
 	private final int minLength;

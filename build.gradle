@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.elasticsearch.gradle:build-tools:7.3.2"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = '13'
+targetCompatibility = '13'
+
+group = 'org.elasticsearch.plugin'
+version = '7.3.2'
+
+apply plugin: 'java'
+apply plugin: 'elasticsearch.esplugin'
+
+// Issue https://github.com/elastic/elasticsearch/issues/45891
+configurations.restSpec.withDependencies { dependencies -> 
+  dependencies.clear()
+  dependencies.add(project.dependencies.create("org.elasticsearch:rest-api-spec:${versions.elasticsearch}"))
+}
+
+dependencies {
+    compile "org.elasticsearch:elasticsearch:${versions.elasticsearch}"
+    compile "org.apache.lucene:lucene-core:${versions.lucene}"
+    testCompile "org.elasticsearch.test:framework:${versions.elasticsearch}"
+    testCompile "org.apache.logging.log4j:log4j-core:2.11.1"
+}
+
+esplugin {
+    name 'elasticsearch-analysis-rslp'
+    description 'Elasticsearch RSLP Analysis plugin'
+    classname 'org.elasticsearch.plugin.analysis.rslp.AnalysisRSLPPlugin'
+    licenseFile rootProject.file('LICENSE.txt')
+    noticeFile rootProject.file('NOTICE.txt')
+}
+
+// unitTest.enabled = false
+testingConventions.enabled = false
+integTestRunner.enabled = false
+licenseHeaders.enabled = false
+test.enabled = false
+dependencyLicenses.enabled = false
+thirdPartyAudit.enabled = false
+checkstyleMain.enabled = false
+forbiddenApisMain.enabled = false
+forbiddenApisTest.enabled = false
+forbiddenPatterns.enabled = false
+filepermissions.enabled = false
+checkstyleTest.enabled = false
